@@ -14,9 +14,9 @@ namespace LitePlacer
     {
         public struct NeedlePoint
         {
-            public double Angle;
-            public double X;  // X offset from nominal, in mm's, at angle
-            public double Y;
+            public decimal Angle;
+            public decimal X;  // X offset from nominal, in mm's, at angle
+            public decimal Y;
         }
 
 		public List<NeedlePoint> CalibrationPoints = new List<NeedlePoint>();
@@ -94,12 +94,12 @@ namespace LitePlacer
 
         public bool Calibrated { get; set; }
 
-        public bool CorrectedPosition_m(double angle, out double X, out double Y)
+        public bool CorrectedPosition_m(decimal angle, out decimal X, out decimal Y)
         {
             if (Properties.Settings.Default.Placement_OmitNeedleCalibration)
             {
-                X = 0.0;
-                Y = 0.0;
+                X = 0;
+                Y = 0;
                 return true;
             };
 
@@ -110,13 +110,13 @@ namespace LitePlacer
                     "Needle not calibrated", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.No)
                 {
-                    X = 0.0;
-                    Y = 0.0;
+                    X = 0;
+                    Y = 0;
                     return false;
                 };
-                double CurrX = Cnc.CurrentX;
-                double CurrY = Cnc.CurrentY;
-                double CurrA = Cnc.CurrentA;
+                decimal CurrX = Cnc.CurrentX;
+                decimal CurrY = Cnc.CurrentY;
+                decimal CurrA = Cnc.CurrentA;
                 if(!MainForm.CalibrateNeedle_m())
                 {
                     X = 0;
@@ -133,15 +133,15 @@ namespace LitePlacer
 
             while (angle < 0)
             {
-                angle = angle + 360.0;
+                angle = angle + 360;
             };
-            while (angle > 360.0)
+            while (angle > 360)
             {
-                angle = angle - 360.0;
+                angle = angle - 360;
             }
             // since we are not going to check the last point (which is the cal. value for 360)
             // in the for loop,we check that now
-            if (angle > 359.98)
+            if (angle > 359.98m)
             {
                 X = CalibrationPoints[0].X;
                 Y = CalibrationPoints[0].Y;
@@ -150,7 +150,7 @@ namespace LitePlacer
 
             for (int i = 0; i < CalibrationPoints.Count; i++)
             {
-                if (Math.Abs(angle - CalibrationPoints[i].Angle) < 1.0)
+                if (Math.Abs(angle - CalibrationPoints[i].Angle) < 1)
                 {
                     X = CalibrationPoints[i].X;
                     Y = CalibrationPoints[i].Y;
@@ -160,10 +160,10 @@ namespace LitePlacer
                     &&
                     (angle < CalibrationPoints[i + 1].Angle)
                     &&
-                    (Math.Abs(angle - CalibrationPoints[i + 1].Angle) > 1.0))
+                    (Math.Abs(angle - CalibrationPoints[i + 1].Angle) > 1))
                 {
                     // angle is between CalibrationPoints[i] and CalibrationPoints[i+1], and is not == CalibrationPoints[i+1]
-                    double fract = (angle - CalibrationPoints[i+1].Angle) / (CalibrationPoints[i+1].Angle - CalibrationPoints[i].Angle);
+                    decimal fract = (angle - CalibrationPoints[i+1].Angle) / (CalibrationPoints[i+1].Angle - CalibrationPoints[i].Angle);
                     X = CalibrationPoints[i].X + fract * (CalibrationPoints[i + 1].X - CalibrationPoints[i].X);
                     Y = CalibrationPoints[i].Y + fract * (CalibrationPoints[i + 1].Y - CalibrationPoints[i].Y);
 					return true;
@@ -179,7 +179,7 @@ namespace LitePlacer
         }
 
 
-        public bool Calibrate(double Tolerance)
+        public bool Calibrate(decimal tolerance)
         {
             if (Properties.Settings.Default.Placement_OmitNeedleCalibration)
             {
@@ -197,13 +197,13 @@ namespace LitePlacer
                 return false;
             }
 
-			double X = 0;
-			double Y = 0;
+			decimal x = 0;
+            decimal y = 0;
 			int res = 0; ;
             for (int i = 0; i <= 3600; i = i + 225)
             {
                 NeedlePoint Point = new NeedlePoint();
-                Point.Angle = Convert.ToDouble(i) / 10.0;
+                Point.Angle = i / 10.0m;
 				if (!CNC_A_m(Point.Angle))
 				{
 					return false;
@@ -211,7 +211,7 @@ namespace LitePlacer
 				for (int tries = 0; tries < 10; tries++)
 				{
     				Thread.Sleep(100);
-					res = Cam.GetClosestCircle(out X, out Y, Tolerance);
+					res = Cam.GetClosestCircle(out x, out y, (double)tolerance);
 					if (res != 0)
 					{
 						break;
@@ -243,8 +243,8 @@ namespace LitePlacer
                 //    return false;
                 //}
 
-                Point.X = X * Properties.Settings.Default.UpCam_XmmPerPixel;
-                Point.Y = Y * Properties.Settings.Default.UpCam_YmmPerPixel;
+                Point.X = x * Properties.Settings.Default.UpCam_XmmPerPixel;
+                Point.Y = y * Properties.Settings.Default.UpCam_YmmPerPixel;
 				// MainForm.DisplayText("A: " + Point.Angle.ToString("0.000") + ", X: " + Point.X.ToString("0.000") + ", Y: " + Point.Y.ToString("0.000"));
                 CalibrationPoints.Add(Point);
             }
@@ -252,17 +252,17 @@ namespace LitePlacer
             return true;
         }
 
-        public bool Move_m(double X, double Y, double A)
+        public bool Move_m(decimal X, decimal Y, decimal A)
         {
-            double dX;
-            double dY;
+            decimal dX;
+            decimal dY;
 			MainForm.DisplayText("Needle.Move_m(): X= " + X.ToString() + ", Y= " + Y.ToString() + ", A= " + A.ToString());
 			if (!CorrectedPosition_m(A, out dX, out dY))
 			{
 				return false;
 			};
-            double Xoff = Properties.Settings.Default.DownCam_NeedleOffsetX;
-            double Yoff = Properties.Settings.Default.DownCam_NeedleOffsetY;
+            decimal Xoff = Properties.Settings.Default.DownCam_NeedleOffsetX;
+            decimal Yoff = Properties.Settings.Default.DownCam_NeedleOffsetY;
             return CNC_XYA(X + Xoff + dX, Y + Yoff + dY, A);
         }
 
@@ -272,17 +272,17 @@ namespace LitePlacer
         // CNC interface functions
         // =================================================================================
         
-        private bool CNC_A_m(double A)
+        private bool CNC_A_m(decimal A)
         {
 			return MainForm.CNC_A_m(A);
         }
 
-        private bool CNC_XY_m(double X, double Y)
+        private bool CNC_XY_m(decimal X, decimal Y)
         {
 			return MainForm.CNC_XY_m(X, Y);
         }
 
-        private bool CNC_XYA(double X, double Y, double A)
+        private bool CNC_XYA(decimal X, decimal Y, decimal A)
         {
 			return MainForm.CNC_XYA_m(X, Y, A);
         }

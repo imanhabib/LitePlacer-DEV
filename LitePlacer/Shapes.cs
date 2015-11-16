@@ -12,13 +12,13 @@ namespace LitePlacer
 		public class Component
 		{
 			public AForge.Point Center { get; set; }	// Centerpoint of component
-			public double Alignment { get; set; }		// angle of component
+			public decimal Alignment { get; set; }		// angle of component
 			public List<IntPoint> Outline { get; set; }
 			public LineSegment Longest { get; set; }	// Longest line segment in Outline (needed in drawing, avoid calculating twice)
 			public AForge.Point NormalStart { get; set; }  // (needed in drawing, avoid calculating twice)
 			public AForge.Point NormalEnd { get; set; }		// (needed in drawing, avoid calculating twice)
 
-			public Component(AForge.Point centr, double alignmnt, List<IntPoint> outln, 
+			public Component(AForge.Point centr, decimal alignmnt, List<IntPoint> outln, 
 							 LineSegment lngst, AForge.Point Nstart, AForge.Point Nend)
 			{
 				Center = centr;
@@ -32,15 +32,15 @@ namespace LitePlacer
 
 		public class Circle
 		{
-			public double X { get; set; }
-			public double Y { get; set; }
-			public double Radius { get; set; }
+			public decimal X { get; set; }
+			public decimal Y { get; set; }
+			public decimal Radius { get; set; }
 
 			public Circle(double x, double y, double r)
 			{
-				X = x;
-				Y = y;
-				Radius = r;
+				X = (decimal)x;
+				Y = (decimal)y;
+				Radius = (decimal)r;
 			}
 		}
 

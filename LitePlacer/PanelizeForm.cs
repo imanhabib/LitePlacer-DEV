@@ -18,14 +18,14 @@ namespace LitePlacer
         public DataGridView JobData;
 
         // =================================================================================
-        private double XFirstOffset = double.NaN;
-        private double YFirstOffset = double.NaN;
+        private decimal XFirstOffset = 0;
+        private decimal YFirstOffset = 0;
 
         private int XRepeats = 0;
         private int YRepeats = 0;
 
-        private double XIncrement = double.NaN;
-        private double YIncrement = double.NaN;
+        private decimal XIncrement = 0;
+        private decimal YIncrement = 0;
         // =================================================================================
         
         public PanelizeForm(FormMain MainF)
@@ -88,10 +88,10 @@ namespace LitePlacer
         // =================================================================================
         private bool ValidateData()
         {
-            double val;
+            decimal val;
             int intval;
 
-            if (double.TryParse(XFirstOffset_textBox.Text, out val))
+            if (decimal.TryParse(XFirstOffset_textBox.Text, out val))
             {
                 XFirstOffset = val;
             }
@@ -104,7 +104,7 @@ namespace LitePlacer
                 return false;
             }
 
-            if (double.TryParse(YFirstOffset_textBox.Text, out val))
+            if (decimal.TryParse(YFirstOffset_textBox.Text, out val))
             {
                 YFirstOffset = val;
             }
@@ -159,7 +159,7 @@ namespace LitePlacer
                 return false;
             }
 
-            if (double.TryParse(XIncrement_textBox.Text, out val))
+            if (decimal.TryParse(XIncrement_textBox.Text, out val))
             {
                 XIncrement = val;
             }
@@ -172,7 +172,7 @@ namespace LitePlacer
                 return false;
             }
 
-            if (double.TryParse(YIncrement_textBox.Text, out val))
+            if (decimal.TryParse(YIncrement_textBox.Text, out val))
             {
                 YIncrement = val;
             }
@@ -252,7 +252,7 @@ namespace LitePlacer
                         OK = false;
                         break;
                     }
-                    if (!double.TryParse(Row.Cells["X_column"].Value.ToString(), out val))
+                    if (!decimal.TryParse(Row.Cells["X_column"].Value.ToString(), out val))
                     {
                         OK = false;
                         break;
@@ -262,7 +262,7 @@ namespace LitePlacer
                         OK = false;
                         break;
                     }
-                    if (!double.TryParse(Row.Cells["Y_column"].Value.ToString(), out val))
+                    if (!decimal.TryParse(Row.Cells["Y_column"].Value.ToString(), out val))
                     {
                         OK = false;
                         break;
@@ -330,7 +330,7 @@ namespace LitePlacer
 
             // For each component in the copy, multiply it:
             string Component = "";
-            double val;
+            decimal val;
             bool OK = true;
             foreach (DataGridViewRow Row in CadData_copy.Rows)
             {
@@ -350,22 +350,22 @@ namespace LitePlacer
                         // Value_Footprint:
                         CadData.Rows[Last].Cells["Value_Footprint"].Value = Row.Cells["Value_Footprint"].Value;
                         // X_nominal:
-                        if (!double.TryParse(Row.Cells["X_nominal"].Value.ToString(), out val))
+                        if (!decimal.TryParse(Row.Cells["X_nominal"].Value.ToString(), out val))
                         {
                             OK = false;
                             Component = Row.Cells["Component"].Value.ToString();
                             break;
                         }
-                        val = XFirstOffset + (double)(PanelColumn - 1) * XIncrement + val;
+                        val = XFirstOffset + (PanelColumn - 1) * XIncrement + val;
                         CadData.Rows[Last].Cells["X_nominal"].Value = val;
                         // Y_nominal:
-                        if (!double.TryParse(Row.Cells["Y_nominal"].Value.ToString(), out val))
+                        if (!decimal.TryParse(Row.Cells["Y_nominal"].Value.ToString(), out val))
                         {
                             OK = false;
                             Component = Row.Cells["Component"].Value.ToString();
                             break;
                         }
-                        val = YFirstOffset + (double)(PanelRow - 1) * YIncrement + val;
+                        val = YFirstOffset + (PanelRow - 1) * YIncrement + val;
                         CadData.Rows[Last].Cells["Y_nominal"].Value = val;
                         // Rotation:
                         CadData.Rows[Last].Cells["Rotation"].Value = Row.Cells["Rotation"].Value;

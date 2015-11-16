@@ -100,12 +100,12 @@ namespace LitePlacer
 		// CurrentX/Y is the corrected value that user sees and uses, and reflects a square machine
 		// TrueX/Y is what the TinyG actually uses.
 
-		public static double SquareCorrection { get; set; }
+		public static decimal SquareCorrection { get; set; }
 
-		private static double CurrX;
-		private static double _trueX;
+		private static decimal CurrX;
+		private static decimal _trueX;
 
-        public double TrueX
+        public decimal TrueX
         {
             get
             {
@@ -117,7 +117,7 @@ namespace LitePlacer
             }
         }
 
-		public double CurrentX
+		public decimal CurrentX
         {
             get
             {
@@ -129,15 +129,15 @@ namespace LitePlacer
             }
         }
 
-        public static void setCurrX(double x)
+        public static void setCurrX(decimal x)
         {
 			_trueX = x;
 			CurrX = x - CurrY * SquareCorrection;
 			// MainForm.DisplayText("CNC.setCurrX: x= " + x.ToString() + ", CurrX= " + CurrX.ToString());
         }
 
-        private static double CurrY;
-        public double CurrentY
+        private static decimal CurrY;
+        public decimal CurrentY
         {
             get
             {
@@ -148,15 +148,15 @@ namespace LitePlacer
                 CurrY = value;
 			}
         }
-        public static void setCurrY(double y)
+        public static void setCurrY(decimal y)
         {
             CurrY = y;
 			CurrX = _trueX - CurrY * SquareCorrection;
 			// MainForm.DisplayText("CNC.setCurrY: TrueX= " + TrueX.ToString() + ", CurrX= " + CurrX.ToString());
 		}
 
-        private static double CurrZ;
-        public double CurrentZ
+        private static decimal CurrZ;
+        public decimal CurrentZ
         {
             get
             {
@@ -167,13 +167,13 @@ namespace LitePlacer
                 CurrZ = value;
             }
         }
-        public static void setCurrZ(double z)
+        public static void setCurrZ(decimal z)
         {
             CurrZ = z;
         }
 
-        private static double CurrA;
-        public double CurrentA
+        private static decimal CurrA;
+        public decimal CurrentA
         {
             get
             {
@@ -184,20 +184,20 @@ namespace LitePlacer
                 CurrA = value;
             }
         }
-        public static void setCurrA(double a)
+        public static void setCurrA(decimal a)
         {
             CurrA = a;
         }
 
         public bool SlackCompensation { get; set; }
-        private double SlackCompensationDistance = 0.4;
+        private decimal SlackCompensationDistance = 0.4m;
 
         public bool SlackCompensationA { get; set; }
-        private double SlackCompensationDistanceA = 10;
+        private decimal SlackCompensationDistanceA = 10;
 
         public string SmallMovementString = "G1 F200 ";
 
-        public void XY(double X, double Y)
+        public void XY(decimal X, decimal Y)
         {
             if ((!SlackCompensation)
                 ||
@@ -213,12 +213,12 @@ namespace LitePlacer
             }
         }
 
-        private void XY_move(double X, double Y)
+        private void XY_move(decimal X, decimal Y)
         {
             string command;
-            double dX = Math.Abs(X - CurrentX);
-            double dY = Math.Abs(Y - CurrentY);
-            if ((dX < 0.004) && (dY < 0.004))
+            decimal dX = Math.Abs(X - CurrentX);
+            decimal dY = Math.Abs(Y - CurrentY);
+            if ((dX < 0.004m) && (dY < 0.004m))
             {
                 MainForm.DisplayText(" -- zero XY movement command --");
                 MainForm.DisplayText("ReadyEvent: zero movement command");
@@ -242,7 +242,7 @@ namespace LitePlacer
             _readyEvent.Wait();
         }
 
-        public void XYA(double X, double Y, double Am)
+        public void XYA(decimal X, decimal Y, decimal Am)
         {
             bool CompensateXY = false;
             bool CompensateA = false;
@@ -279,13 +279,13 @@ namespace LitePlacer
             }
         }
 
-        private void XYA_move(double X, double Y, double Am)
+        private void XYA_move(decimal X, decimal Y, decimal Am)
         {
             string command;
-            double dX = Math.Abs(X - CurrentX);
-            double dY = Math.Abs(Y - CurrentY);
-            double dA = Math.Abs(Am - CurrentA);
-            if ((dX < 0.004) && (dY < 0.004) && (dA < 0.01))
+            decimal dX = Math.Abs(X - CurrentX);
+            decimal dY = Math.Abs(Y - CurrentY);
+            decimal dA = Math.Abs(Am - CurrentA);
+            if ((dX < 0.004m) && (dY < 0.004m) && (dA < 0.01m))
             {
                 MainForm.DisplayText(" -- zero XYA movement command --");
                 MainForm.DisplayText("ReadyEvent: zero movement command");
@@ -308,7 +308,7 @@ namespace LitePlacer
             {
                 // either XY or A (or both) is a small movement
 				X = X + SquareCorrection * Y;
-				if ((dX < 1.1) && (dY < 1.1))
+				if ((dX < 1.1m) && (dY < 1.1m))
                 {
                     command = SmallMovementString + "X" + X.ToString(CultureInfo.InvariantCulture) + 
                                                     " Y" + Y.ToString(CultureInfo.InvariantCulture) + " A" + Am.ToString(CultureInfo.InvariantCulture);
@@ -328,18 +328,18 @@ namespace LitePlacer
         }
 
 
-        public void Z(double Z)
+        public void Z(decimal Z)
         {
             string command;
-            double dZ = Math.Abs(Z - CurrentZ);
-            if (dZ < 0.005)
+            decimal dZ = Math.Abs(Z - CurrentZ);
+            if (dZ < 0.005m)
             {
                 MainForm.DisplayText(" -- zero Z movement command --");
                 MainForm.DisplayText("ReadyEvent: zero movement command");
                 _readyEvent.Set();
                 return;   // already there
             }
-            if (dZ < 1.1)
+            if (dZ < 1.1m)
             {
                 command = "G1 Z" + Z.ToString(CultureInfo.InvariantCulture);
             }
@@ -353,9 +353,9 @@ namespace LitePlacer
             _readyEvent.Wait();
         }
 
-        public void A(double A)
+        public void A(decimal A)
         {
-            if (Math.Abs(A - CurrentA) < 0.01)
+            if (Math.Abs(A - CurrentA) < 0.01m)
             {
                 MainForm.DisplayText(" -- zero A movement command --");
                 _readyEvent.Set();
@@ -371,7 +371,7 @@ namespace LitePlacer
                 A_move(A);
             }
         }
-        private void A_move(double A)
+        private void A_move(decimal A)
         {
             string command;
             if (Math.Abs(A - CurrentA) < 5)
@@ -653,8 +653,8 @@ namespace LitePlacer
             // mpox, posy, ...: Position
             // NOTE: Some firmware versions use mpox, mpoy,... some use posx, posy, ... 
             // This should be reflected in the public variable names
-            private double _posx = 0;
-            public double posx // <======================== here
+            private decimal _posx = 0;
+            public decimal posx // <======================== here
             {
                 get { return _posx; }
                 set
@@ -665,8 +665,8 @@ namespace LitePlacer
                 }
             }
 
-            private double _posy = 0;
-            public double posy // <======================== and here
+            private decimal _posy = 0;
+            public decimal posy // <======================== and here
             {
                 get { return _posy; }
                 set
@@ -677,8 +677,8 @@ namespace LitePlacer
                 }
             }
 
-            private double _posz = 0;
-            public double posz // <======================== and here
+            private decimal _posz = 0;
+            public decimal posz // <======================== and here
             {
                 get { return _posz; }
                 set
@@ -689,8 +689,8 @@ namespace LitePlacer
                 }
             }
 
-            private double _posa = 0;
-            public double posa // <======================== and here
+            private decimal _posa = 0;
+            public decimal posa // <======================== and here
             {
                 get { return _posa; }
                 set
@@ -702,10 +702,10 @@ namespace LitePlacer
             }
 
             /*
-            public double ofsx { get; set; }
-            public double ofsy { get; set; }
-            public double ofsz { get; set; }
-            public double ofsa { get; set; }
+            public decimal ofsx { get; set; }
+            public decimal ofsy { get; set; }
+            public decimal ofsz { get; set; }
+            public decimal ofsa { get; set; }
             public int unit { get; set; }
             public int stat { get; set; }
             public int coor { get; set; }

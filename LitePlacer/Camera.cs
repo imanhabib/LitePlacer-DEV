@@ -401,12 +401,12 @@ namespace LitePlacer
 		// Since the measured image might be zoomed in, we need the value, so that we can convert to real measurements (public for debug)
 		public double GetMeasurementZoom()
 		{
-			double zoom = 1.0;
+			double zoom = 1.0d;
 			foreach (AForgeFunction f in MeasurementFunctions)
 			{
 				if (f.func == Meas_ZoomFunc)
 				{
-                    zoom = zoom * f.parameter_double;
+                    zoom = zoom * (double)f.parameter_double;
 				}
 			}
 			return zoom;
@@ -415,12 +415,12 @@ namespace LitePlacer
 		// UI also needs the zoom factor from the DisplayFunctions
 		public double GetDisplayZoom()
 		{
-			double zoom = 1.0;
+			double zoom = 1.0d;
 			foreach (AForgeFunction f in DisplayFunctions)
 			{
 				if (f.func == Meas_ZoomFunc)
 				{
-					zoom = zoom * f.parameter_double;
+					zoom = zoom * (double)f.parameter_double;
 				}
 			}
 			return zoom;
@@ -432,8 +432,8 @@ namespace LitePlacer
 		// ==========================================================================================================
 		// Zoom
 		public bool Zoom { get; set; }          // If image is zoomed or not
-		private double _ZoomFactor = 1.0;
-		public double ZoomFactor                // If it is, this much
+		private decimal _ZoomFactor = 1.0m;
+		public decimal ZoomFactor                // If it is, this much
 		{
 			get
 			{
@@ -451,8 +451,8 @@ namespace LitePlacer
 		public bool Invert { get; set; }                    // If image is inverted (makes most sense on grayscale, looking for black stuff on light background)
 		public bool DrawCross { get; set; }         // If crosshair cursor is drawn
 		public bool DrawSidemarks { get; set; }     // If marks on the side of the image are drawn
-		public double SideMarksX { get; set; }		// How many marks on top and bottom (X) and sides (Y)
-		public double SideMarksY { get; set; }		// (double, so you can do "SidemarksX= workarea_in_mm / 100;" to get mark every 10cm
+		public decimal SideMarksX { get; set; }		// How many marks on top and bottom (X) and sides (Y)
+		public decimal SideMarksY { get; set; }		// (decimal, so you can do "SidemarksX= workarea_in_mm / 100;" to get mark every 10cm
 		public bool DrawDashedCross { get; set; }   // If a dashed crosshaircursor is drawn (so that the center remains visible)
 		public bool FindCircles { get; set; }       // Find and highlight circles in the image
 		public bool FindRectangles { get; set; }    // Find and draw regtangles in the image
@@ -491,9 +491,9 @@ namespace LitePlacer
 			}
 		}
 
-		private double boxRotation = 0;
+		private decimal boxRotation = 0;
 		private System.Drawing.Point[] BoxPoints = new System.Drawing.Point[4];
-		public double BoxRotationDeg        // The box is drawn rotated this much
+		public decimal BoxRotationDeg        // The box is drawn rotated this much
 		{
 			get
 			{
@@ -512,7 +512,7 @@ namespace LitePlacer
 				BoxPoints[3].X = BoxSizeX / 2;
 				BoxPoints[3].Y = -BoxSizeY / 2;
 				// now, rotate them:
-				double Rot = -boxRotation / (180 / Math.PI);  // to radians, and counter-clockwise
+				double Rot = -(double)boxRotation / (180d / Math.PI);  // to radians, and counter-clockwise
 				for (int i = 0; i < 4; i++)
 				{
 					// If you rotate point (px, py) around point (ox, oy) by angle theta you'll get:
@@ -521,10 +521,10 @@ namespace LitePlacer
 					// ox, oy= 0 ==>
 					// p'x = cos(theta) * (px) - sin(theta) * (py)
 					// p'y = sin(theta) * (px) + cos(theta) * (py)
-					double pX = BoxPoints[i].X;
-					double pY = BoxPoints[i].Y;
-					BoxPoints[i].X = (int)Math.Round(Math.Cos(Rot) * pX - Math.Sin(Rot) * pY);
-					BoxPoints[i].Y = (int)Math.Round(Math.Sin(Rot) * pX + Math.Cos(Rot) * pY);
+					decimal pX = BoxPoints[i].X;
+					decimal pY = BoxPoints[i].Y;
+					BoxPoints[i].X = (int)Math.Round(Math.Cos(Rot) * (double)pX - Math.Sin(Rot) * (double)pY);
+					BoxPoints[i].Y = (int)Math.Round(Math.Sin(Rot) * (double)pX + Math.Cos(Rot) * (double)pY);
 				}
 			}
 		}
@@ -608,7 +608,7 @@ namespace LitePlacer
 
 			if (Zoom)
 			{
-				ZoomFunct(ref frame, ZoomFactor);
+				ZoomFunct(ref frame, (double)ZoomFactor);
 			};
 
 			if (DrawCross) 
@@ -937,15 +937,15 @@ namespace LitePlacer
 					ComponentCenter.X = (float)Math.Round((LongestCenter.X - Furthest.X) / 2.0 + Furthest.X);
 					ComponentCenter.Y = (float)Math.Round((LongestCenter.Y - Furthest.Y) / 2.0 + Furthest.Y);
                     // Alignment is the angle of longest
-					double Alignment;
+					decimal Alignment;
                     if (Math.Abs(Longest.End.X - Longest.Start.X) < 0.001)
 					{
 						Alignment = 0;
 					}
 					else
 					{
-                        Alignment = Math.Atan((Longest.End.Y - Longest.Start.Y) / (Longest.End.X - Longest.Start.X));
-						Alignment = Alignment * 180.0 / Math.PI; // in deg.
+                        Alignment = (decimal)Math.Atan((Longest.End.Y - Longest.Start.Y) / (Longest.End.X - Longest.Start.X));
+						Alignment = Alignment * 180m / 3.1415926535897932384626433m; // in deg.
 					}
 					Components.Add(new Shapes.Component(ComponentCenter, Alignment, Outline, Longest, NormalStart, NormalEnd));
 				}
@@ -1022,7 +1022,7 @@ namespace LitePlacer
 			return (bitmap);
 		}
 
-        public int GetClosestComponent(out double X, out double Y, out double A, double MaxDistance)
+        public int GetClosestComponent(out decimal x, out decimal y, out decimal a, double MaxDistance)
 		// Sets X, Y position of the closest component to the frame center in pixels, 
         // A to rotation in degrees, 
         // return value is number of components found
@@ -1030,9 +1030,13 @@ namespace LitePlacer
 			List<Shapes.Component> RawComponents = FindComponentsFunct(GetMeasurementFrame());
 			List<Shapes.Component> GoodComponents = new List<Shapes.Component>();
 
-			X = 0.0;
-			Y = 0.0;
-            A = 0.0;
+			x = 0.0m;
+			y = 0.0m;
+            a = 0.0m;
+
+            double dX;
+            double dY;
+
 			if (RawComponents.Count == 0)
 			{
 				return (0);
@@ -1040,9 +1044,10 @@ namespace LitePlacer
 			// Remove those that are more than MaxDistance away from frame center
 			foreach (Shapes.Component Component in RawComponents)
 			{
-				X = (Component.Center.X - FrameCenterX);
-				Y = (Component.Center.Y - FrameCenterY);
-				if ((X * X + Y * Y) < (MaxDistance * MaxDistance))
+                // use doubles, precision isnt important
+				dX = Component.Center.X - FrameCenterX;
+				dY = Component.Center.Y - FrameCenterY;
+				if ((dX * dX + dY * dY) < (MaxDistance * MaxDistance))
 				{
 					GoodComponents.Add(Component);
 				}
@@ -1052,11 +1057,11 @@ namespace LitePlacer
 				return (0);
 			}
 			// Find the closest
-			X = (GoodComponents[0].Center.X - FrameCenterX);
-			Y = (GoodComponents[0].Center.Y - FrameCenterY);
-            A = GoodComponents[0].Alignment;
-            double dist = X * X + Y * Y;  // we return X and Y, so we don't neet to take square roots to use right distance value
-			double dX, dY;
+			x = (decimal)(GoodComponents[0].Center.X - FrameCenterX);
+			y = (decimal)(GoodComponents[0].Center.Y - FrameCenterY);
+            a = GoodComponents[0].Alignment;
+            double dist = (double)(x * x + y * y);  // we return X and Y, so we don't neet to take square roots to use right distance value
+			
 			for (int i = 0; i < GoodComponents.Count; i++)
 			{
 				dX = GoodComponents[i].Center.X - FrameCenterX;
@@ -1064,14 +1069,14 @@ namespace LitePlacer
 				if ((dX * dX + dY * dY) < dist)
 				{
 					dist = dX * dX + dY * dY;
-					X = dX;
-					Y = dY;
-                    A = GoodComponents[i].Alignment;
+					x = (decimal)GoodComponents[i].Center.X - FrameCenterX;
+					y = (decimal)GoodComponents[i].Center.Y - FrameCenterY;
+                    a = GoodComponents[i].Alignment;
                 }
 			}
-			double zoom = GetMeasurementZoom();
-			X = X / zoom;
-			Y = Y / zoom;
+            decimal zoom = (decimal)GetMeasurementZoom();
+			x = x / zoom;
+			y = y / zoom;
 			return (GoodComponents.Count);
 		}
 
@@ -1129,13 +1134,16 @@ namespace LitePlacer
 
 
 		// =========================================================
-		public int GetClosestCircle(out double X, out double Y, double MaxDistance)
+		public int GetClosestCircle(out decimal X, out decimal Y, double MaxDistance)
 		// Sets X, Y position of the closest circle to the frame center in pixels, return value is number of circles found
 		{
 			List<Shapes.Circle> GoodCircles = new List<Shapes.Circle>();
 			List<Shapes.Circle> RawCircles = FindCirclesFunct(GetMeasurementFrame());
-			X = 0.0;
-			Y = 0.0;
+			X = 0.0m;
+			Y = 0.0m;
+            double dX;
+            double dY;
+
 			if (RawCircles.Count == 0)
 			{
 				return (0);
@@ -1144,9 +1152,11 @@ namespace LitePlacer
 			// Remove those that are more than MaxDistance away from frame center
 			foreach (Shapes.Circle Circle in RawCircles)
 			{
-				X = (Circle.X - FrameCenterX);
-				Y = (Circle.Y - FrameCenterY);
-				if ((X * X + Y * Y) < (MaxDistance * MaxDistance))
+                // working in doubles since no precision is required here.
+				dX = (double)(Circle.X - FrameCenterX);
+				dY = (double)(Circle.Y - FrameCenterY);
+
+				if ((dX * dX + dY * dY) < (MaxDistance * MaxDistance))
 				{
 					GoodCircles.Add(Circle);
 				}
@@ -1156,22 +1166,22 @@ namespace LitePlacer
 				return (0);
 			}
 			// Find the closest
-			X = (GoodCircles[0].X - FrameCenterX);
-			Y = (GoodCircles[0].Y - FrameCenterY);
-			double dist = X * X + Y * Y;  // we return X and Y, so we don't neet to take square roots to use right distance value
-			double dX, dY;
+			dX = (double)(GoodCircles[0].X - FrameCenterX);
+			dY = (double)(GoodCircles[0].Y - FrameCenterY);
+			double dist = dX * dX + dY * dY;  // we return X and Y, so we don't neet to take square roots to use right distance value
+			
 			for (int i = 0; i < GoodCircles.Count; i++)
 			{
-				dX = GoodCircles[i].X - FrameCenterX;
-				dY = GoodCircles[i].Y - FrameCenterY;
+				dX = (double)GoodCircles[i].X - FrameCenterX;
+				dY = (double)GoodCircles[i].Y - FrameCenterY;
 				if ((dX * dX + dY * dY) < dist)
 				{
 					dist = dX * dX + dY * dY;
-					X = dX;
-					Y = dY;
+					X = GoodCircles[i].X - FrameCenterX;
+					Y = GoodCircles[i].Y - FrameCenterY;
 				}
 			}
-			double zoom = GetMeasurementZoom();
+			decimal zoom = (decimal)GetMeasurementZoom();
 			X = X / zoom;
 			Y = Y / zoom;
 			return (GoodCircles.Count);

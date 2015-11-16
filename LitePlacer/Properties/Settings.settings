@@ -5,10 +5,10 @@
     <Setting Name="CNC_SerialPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM3</Value>
     </Setting>
-    <Setting Name="DownCam_XmmPerPixel" Type="System.Double" Scope="User">
+    <Setting Name="DownCam_XmmPerPixel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.1</Value>
     </Setting>
-    <Setting Name="DownCam_YmmPerPixel" Type="System.Double" Scope="User">
+    <Setting Name="DownCam_YmmPerPixel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="TinyG_sys" Type="System.String" Scope="User">
@@ -44,16 +44,16 @@
     <Setting Name="DownCam_index" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
-    <Setting Name="General_JigOffsetX" Type="System.Double" Scope="User">
+    <Setting Name="General_JigOffsetX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="General_JigOffsetY" Type="System.Double" Scope="User">
+    <Setting Name="General_JigOffsetY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="General_ParkX" Type="System.Double" Scope="User">
+    <Setting Name="General_ParkX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_ParkY" Type="System.Double" Scope="User">
+    <Setting Name="General_ParkY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_MediumSpeed" Type="System.String" Scope="User">
@@ -65,49 +65,49 @@
     <Setting Name="DownCam_Zoom" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="General_PickupCenterX" Type="System.Double" Scope="User">
+    <Setting Name="General_PickupCenterX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_PickupCenterY" Type="System.Double" Scope="User">
+    <Setting Name="General_PickupCenterY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="UpCam_index" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
-    <Setting Name="UpCam_XmmPerPixel" Type="System.Double" Scope="User">
+    <Setting Name="UpCam_XmmPerPixel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
-    <Setting Name="UpCam_YmmPerPixel" Type="System.Double" Scope="User">
+    <Setting Name="UpCam_YmmPerPixel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="UpCam_Zoom" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="UpCam_Zoomfactor" Type="System.Double" Scope="User">
+    <Setting Name="UpCam_Zoomfactor" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1.5</Value>
     </Setting>
-    <Setting Name="UpCam_PositionX" Type="System.Double" Scope="User">
+    <Setting Name="UpCam_PositionX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
-    <Setting Name="UpCam_PositionY" Type="System.Double" Scope="User">
+    <Setting Name="UpCam_PositionY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="DownCam_NeedleOffsetX" Type="System.Double" Scope="User">
+    <Setting Name="DownCam_NeedleOffsetX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">75</Value>
     </Setting>
-    <Setting Name="DownCam_NeedleOffsetY" Type="System.Double" Scope="User">
+    <Setting Name="DownCam_NeedleOffsetY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">29</Value>
     </Setting>
-    <Setting Name="General_MachineSizeX" Type="System.Double" Scope="User">
+    <Setting Name="General_MachineSizeX" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">590</Value>
     </Setting>
-    <Setting Name="General_MachineSizeY" Type="System.Double" Scope="User">
+    <Setting Name="General_MachineSizeY" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">370</Value>
     </Setting>
-    <Setting Name="General_ProbingBackOff" Type="System.Double" Scope="User">
+    <Setting Name="General_ProbingBackOff" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.2</Value>
     </Setting>
-    <Setting Name="General_ZtoPCB" Type="System.Double" Scope="User">
+    <Setting Name="General_ZtoPCB" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="CNC_ZspeedMax" Type="System.Int32" Scope="User">
@@ -131,55 +131,55 @@
     <Setting Name="CNC_SlackCompensation" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="General_Mark1X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark1X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark1Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark1Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark1Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mark1</Value>
     </Setting>
-    <Setting Name="General_Mark2X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark2X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark2Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark2Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark2Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mark2</Value>
     </Setting>
-    <Setting Name="General_Mark3X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark3X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark3Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark3Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark3Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mark3</Value>
     </Setting>
-    <Setting Name="General_Mark4X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark4X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark4Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark4Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark4Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mark4</Value>
     </Setting>
-    <Setting Name="General_Mark5X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark5X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark5Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark5Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark5Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mark5</Value>
     </Setting>
-    <Setting Name="General_Mark6X" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark6X" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_Mark6Y" Type="System.Double" Scope="User">
+    <Setting Name="General_Mark6Y" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="General_Mark6Name" Type="System.String" Scope="User">
@@ -197,22 +197,22 @@
     <Setting Name="DownCam_DrawTicks" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="CNC_SquareCorrection" Type="System.Double" Scope="User">
+    <Setting Name="CNC_SquareCorrection" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="General_ZTestTravel" Type="System.Double" Scope="User">
+    <Setting Name="General_ZTestTravel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="General_UpgradeRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="General_ShadeGuard_mm" Type="System.Double" Scope="User">
+    <Setting Name="General_ShadeGuard_mm" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Panel_XFirstOffset" Type="System.Double" Scope="User">
+    <Setting Name="Panel_XFirstOffset" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Panel_YFirstOffset" Type="System.Double" Scope="User">
+    <Setting Name="Panel_YFirstOffset" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Panel_XRepeats" Type="System.Int32" Scope="User">
@@ -221,10 +221,10 @@
     <Setting Name="Panel_YRepeats" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Panel_XIncrement" Type="System.Double" Scope="User">
+    <Setting Name="Panel_XIncrement" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Panel_YIncrement" Type="System.Double" Scope="User">
+    <Setting Name="Panel_YIncrement" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Panel_UseBoardFids" Type="System.Boolean" Scope="User">
@@ -251,7 +251,7 @@
     <Setting Name="CNC_SlackCompensationA" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Placement_Depth" Type="System.Double" Scope="User">
+    <Setting Name="Placement_Depth" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Placement_OmitNeedleCalibration" Type="System.Boolean" Scope="User">
